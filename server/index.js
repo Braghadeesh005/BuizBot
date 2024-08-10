@@ -62,7 +62,7 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication
-    res.redirect('/profile');
+    res.redirect('http://localhost:5173/home');
   }
 );
 
