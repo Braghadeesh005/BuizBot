@@ -1,11 +1,12 @@
 import React from 'react';
 import { loginWithGoogle } from '../api/auth';
+import "./Login.css"
 
 function Login() {
   return (
-    <div>
-      <h1>Login</h1>
-      <button onClick={loginWithGoogle}>Login with Google</button>
+    <div className='Login-container'>
+      <h1 className='heading'>Buiz.ai</h1>
+      <button onClick={loginWithGoogle} className='button'>Login with Google</button>
     </div>
   );
 }
