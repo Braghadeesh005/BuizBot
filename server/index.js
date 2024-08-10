@@ -10,32 +10,30 @@ require('dotenv').config();
 const app = express();
 const port = 3000;
 
-// Connect to MongoDB
+
 
 mongoose.connect('mongodb://localhost:27017/userauth')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB', err));
 
-// User model
+
 const userSchema = new mongoose.Schema({
   googleId: String,
   displayName: String,
   email: String,
-  // Add any other fields you want to store
 });
 
 const User = mongoose.model('User', userSchema);
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Your client URL
+  origin: 'http://localhost:5173', 
   credentials: true
 }));
 
-// Replace with your Google Client ID and Secret
+
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
 // Configure session middleware
@@ -119,6 +117,14 @@ app.get('/profile', async (req, res) => {
   }
 });
 
+app.get('/logout', (req, res) => {
+  req.logout(function(err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error during logout' });
+    }
+    res.redirect('http://localhost:5173/'); // Redirect to your frontend homepage
+  });
+});
 // Route for the home page
 app.get('/', (req, res) => {
   res.send('<a href="/auth/google">Authenticate with Google</a>');
